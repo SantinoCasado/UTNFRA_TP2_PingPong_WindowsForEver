@@ -7,12 +7,26 @@ import pygame.mixer as mixer
 #Inicializamos el pygame
 pygame.init()
 
+#Inicializamos el mixer
+mixer.init()
+
 #Configuracion de la pantalla
 screen = pygame.display.set_mode((800, 600))    #tupla que define el tamaño de la ventana, con 800 píxeles de ancho y 600 píxeles de alto.
 pygame.display.set_caption("Ping Pong")         #Título de la ventana del juego.
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
+
+#Sonido colision entre la pelota y la paleta
+collision_paleta_sound = pygame.mixer.Sound("contra_paleta.mp3")
+
+#Sondio cuando choca contra los bordes
+collition_limites_sound = pygame.mixer.Sound("contra_pared.mp3")
+collition_limites_sound.set_volume(60)
+
+#Sonido cuando consigue un punto
+point_sound = pygame.mixer.Sound("punto.mp3")
+point_sound.set_volume(1)
 
 #Esablecemos clase Pelota
 class Ball: 
@@ -39,18 +53,22 @@ class Ball:
             self.rect.y = self.y_float  #velocidad en numeros con coma
         
         # Si rebota en los bordes superiores e inferiores  
-        if self.rect.y <= 0 or self.rect.y >= 580: 
+        if self.rect.y <= 0 or self.rect.y >= 580:
+            pygame.mixer.Sound.play(collition_limites_sound)
             self.y_change = -self.y_change 
         
         # Si se consigue un punto vuelve a la poscion incial
-        if self.rect.x <= 0: 
+        if self.rect.x <= 0:
+            pygame.mixer.Sound.play(point_sound) 
             self.reset() 
         elif self.rect.x >= 780:
+            pygame.mixer.Sound.play(point_sound) 
             self.reset()
         
         #Si coliciona con una de las paletas cambia la direccion
         #El .colliderect devuelve un booleano si colicionaron o no dos .Rect
-        if self.rect.colliderect(paleta_izquierda.rect) or self.rect.colliderect(paleta_derecha.rect): 
+        if self.rect.colliderect(paleta_izquierda.rect) or self.rect.colliderect(paleta_derecha.rect):
+            pygame.mixer.Sound.play(collision_paleta_sound) 
             self.x_change = -self.x_change 
     
     #Establecemos la funcion de reset
