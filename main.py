@@ -1,7 +1,9 @@
 import pygame
-import random
-import math
 import pygame.mixer as mixer
+from Clases import *
+from Functions_game.point_players import point_player_1, point_player_2
+from Functions_game.winner import winner
+
 
 # Inicializamos el pygame
 pygame.init()
@@ -16,110 +18,18 @@ pygame.display.set_caption("Ping Pong")         # Título de la ventana del jueg
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
-# Sonido colisión entre la pelota y la paleta
-collision_paleta_sound = pygame.mixer.Sound("contra_paleta.mp3")
-
-# Sonido cuando choca contra los bordes
-collition_limites_sound = pygame.mixer.Sound("contra_pared.mp3")
-collition_limites_sound.set_volume(60)
-
-# Sonido cuando consigue un punto
-point_sound = pygame.mixer.Sound("punto.mp3")
-point_sound.set_volume(1)
-
 #Inicializo los puntajes
 player_1_score = 0
 player_2_score = 0
 font_score = pygame.font.Font(None, 64)
 
-# Establecemos clase Pelota
-class Ball: 
-    def __init__(self):
-        self.rect = pygame.Rect(400 - 10, 300 - 10, 20, 20)
-        self.x_change = 1 * random.choice([-1, 1])
-        self.y_change = 1 * random.choice([-1, 1])
-        self.state = "waiting"
-        # Pasamos a float las posiciones de x e y ya que es un Rect y esta es una forma de que se mueva a una velocidad en números con coma
-        self.x_float = self.rect.x 
-        self.y_float = self.rect.y 
-        
-    def draw(self):
-        pygame.draw.rect(screen, WHITE, self.rect)
-
-    def move(self, paleta_izquierda, paleta_derecha):
-        # Si el jugador aprieta el espacio
-        if self.state == "start":
-            self.x_float += self.x_change  # Modificamos la posición a partir de la velocidad
-            self.y_float += self.y_change
-
-            self.rect.x = self.x_float  # Modificamos la posición actual para que realice la ejecución a una
-            self.rect.y = self.y_float  # Velocidad en números con coma
-        
-        # Si rebota en los bordes superiores e inferiores
-        if self.rect.y <= 0 or self.rect.y >= 580:
-            pygame.mixer.Sound.play(collition_limites_sound)
-            self.y_change = -self.y_change 
-        
-        # Si colisiona con una de las paletas cambia la dirección
-        if self.rect.colliderect(paleta_izquierda.rect) or self.rect.colliderect(paleta_derecha.rect):
-            pygame.mixer.Sound.play(collision_paleta_sound)
-            self.x_change *= 1.1    # Aumenta la velocidad un 10% cada vez que la pelota hace un rebote.
-            self.y_change *= 1.1    # Aumenta la velocidad un 10% en el eje Y también.
-            self.x_change = -self.x_change  #Cambia de lado
-    
-    # Establecemos la función de reset
-    def reset(self):
-        self.rect.x = 400 - 10  # Establecemos la posición en x de reset
-        self.rect.y = 300 - 10  # Establecemos la posición en y de reset
-
-        self.x_float = self.rect.x  # Modificamos la posición actual en x a la posición de reset
-        self.y_float = self.rect.y  # Modificamos la posición actual en y a la posición de reset
-
-        self.x_change = 1 * random.choice([-1, 1])  # Volvemos a elegir un inicio aleatorio en x
-        self.y_change = 1 * random.choice([-1, 1])  # Volvemos a elegir un inicio aleatorio en y
-
-        self.state = "waiting"
-
-# Establecemos la clase jugador
-class Player: 
-    def __init__(self, x, y): 
-        self.rect = pygame.Rect(x, y, 20, 100)
-        self.y_change = 0 
-        self.y_float = self.rect.y 
-
-    def draw(self):
-        pygame.draw.rect(screen, WHITE, self.rect)
-    
-    def move(self):
-        self.y_float += self.y_change 
-        self.rect.y = self.y_float
-
-        # Limitar el movimiento dentro de los límites de la pantalla
-        if self.rect.y <= 0: 
-            self.rect.y = 0
-        elif self.rect.y >= 500: 
-            self.rect.y = 500
-
-def point_player_1(ball_x):
-    if ball_x >= 780:
-        pygame.mixer.Sound.play(point_sound)
-        return True
-
-def point_player_2(ball_x):
-    if ball_x <= 0:
-        pygame.mixer.Sound.play(point_sound)
-        return True
-
-def winner (player):
-    over_font = pygame.font.Font(None, 64)
-    over_text = over_font.render(f"{player} WIN", True, (255, 0, 0))
-    screen.blit(over_text, (250, 250))
-
 status = "playing"
 
+#Inicializo los jugadores
 player_1 = Player(780, 300)
 player_2 = Player(0, 300)
 
+#Inicializo la pelota
 ball = Ball()
 # Bandera
 running = True
