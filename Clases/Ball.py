@@ -22,12 +22,12 @@ collition_limites_sound.set_volume(60)
 class Ball: 
     def __init__(self):
         self.rect = pygame.Rect(400 - 10, 300 - 10, 20, 20)
-        self.x_change = 1 * random.choice([-1, 1])
-        self.y_change = 1 * random.choice([-1, 1])
+        self.x_change = 0.1 * random.choice([-1, 1])
+        self.y_change = 0.1 * random.choice([-1, 1])
         self.state = "waiting"
         # Pasamos a float las posiciones de x e y ya que es un Rect y esta es una forma de que se mueva a una velocidad en números con coma
-        self.x_float = self.rect.x 
-        self.y_float = self.rect.y 
+        self.x_float = float(self.rect.x) 
+        self.y_float = float(self.rect.y) 
         
     def draw(self):
         pygame.draw.rect(screen, WHITE, self.rect)
@@ -61,7 +61,7 @@ class Ball:
         self.x_float = self.rect.x  # Modificamos la posición actual en x a la posición de reset
         self.y_float = self.rect.y  # Modificamos la posición actual en y a la posición de reset
 
-        self.x_change = 1 * random.choice([-1, 1])  # Volvemos a elegir un inicio aleatorio en x
-        self.y_change = 1 * random.choice([-1, 1])  # Volvemos a elegir un inicio aleatorio en y
+        self.x_change = 0.1 * random.choice([-1, 1])  # Volvemos a elegir un inicio aleatorio en x
+        self.y_change = 0.1 * random.choice([-1, 1])  # Volvemos a elegir un inicio aleatorio en y
 
         self.state = "waiting"
