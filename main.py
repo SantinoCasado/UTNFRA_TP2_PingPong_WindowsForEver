@@ -118,6 +118,7 @@ while running:
         screen.blit(score_text_p1, (325, 20))  
         screen.blit(score_text_p2, (450, 20))
 
+        # En el caso de que uno de los jugadores consiga 9 puntos se mostrara el texto: "¡MATCH POINT!"
         if player_1_score == 9 or player_2_score == 9:
             text_match_point = font_match_point.render(f"{match_point_txt}", True, (255, 0, 0))
             screen.blit(text_match_point, (314 , 65))
