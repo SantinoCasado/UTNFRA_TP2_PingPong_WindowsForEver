@@ -41,8 +41,10 @@ while running:
     # Detección de eventos
     for event in pygame.event.get():
         match event.type:
+            #Detecta si sale del juego
             case pygame.QUIT:
                 running = False
+            # Deteccion de eventos cuanto APRIETA una tecla
             case pygame.KEYDOWN:
                 match event.key:
                     # Player 1
@@ -69,7 +71,7 @@ while running:
                         player_2_score = 0
                         status = "playing"
 
-            # Detectar si se suelta la tecla
+            # Detectar si se SUELTA la tecla
             case pygame.KEYUP:
                 match event.key:
                     #Player 1
@@ -83,8 +85,9 @@ while running:
                     case pygame.K_s:
                         player_2.y_change = 0
 
+    # Mientras que la partida este en proceso
     if status == "playing":
-        pygame.draw.line(screen, WHITE, (400, 0), (400, 600), 2)  # Línea vertical en   el centro de la pantalla
+        pygame.draw.line(screen, WHITE, (400, 0), (400, 600), 2)  # Línea vertical en  el centro de la pantalla
 
         # Si y quien consiguió un punto
         if point_player_1(ball.rect.x):
@@ -97,7 +100,7 @@ while running:
         # Muevo y dibujo a los jugadores
         player_1.move()
         player_1.draw()
-
+        
         player_2.move()
         player_2.draw()
 
@@ -111,21 +114,25 @@ while running:
         screen.blit(score_text_p1, (325, 20))  
         screen.blit(score_text_p2, (450, 20))
 
+        # Cuando uno de los jugadores logra 10 puntos se termina el juego
         if player_1_score == 10 or player_2_score == 10:
             status = "finished"
     
+    # Si el juego esta terminado
     elif status == "finished":
+        # Si fue el player 1 quien consiguio los 10 puntos
         if player_1_score == 10:
             winner("PLAYER 1")
-            pygame.display.flip()
-            pygame.time.delay(3500)
-            running = False
+            pygame.display.flip()   # Actualizo la pantalla
+            pygame.time.delay(3500) # Una vez terminado el juego dejo la venta abierta unos segundos
+            running = False         # Termino el juego
 
+        # Si fue el player 2 quien consiguio los 10 puntos
         elif player_2_score == 10:
             winner("PLAYER 2")
-            pygame.display.flip()
-            pygame.time.delay(3500)
-            running = False
+            pygame.display.flip()   
+            pygame.time.delay(3500) 
+            running = False         
 
     # Actualizar la pantalla
     pygame.display.flip()
