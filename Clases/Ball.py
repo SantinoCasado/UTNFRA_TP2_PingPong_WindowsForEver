@@ -26,8 +26,8 @@ class Ball:
         self.y_change = 0.1 * random.choice([-1, 1])
         self.state = "waiting"
         # Pasamos a float las posiciones de x e y ya que es un Rect y esta es una forma de que se mueva a una velocidad en números con coma
-        self.x_float = float(self.rect.x) 
-        self.y_float = float(self.rect.y) 
+        self.x_float = float(self.rect.x)   # Aseguramos que sea un flotante desde el principio
+        self.y_float = float(self.rect.y)   # Aseguramos que sea un flotante desde el principio
         
     def draw(self):
         pygame.draw.rect(screen, WHITE, self.rect)

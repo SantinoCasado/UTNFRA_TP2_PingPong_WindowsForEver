@@ -40,41 +40,48 @@ while running:
 
     # Detección de eventos
     for event in pygame.event.get():
-        # Si quitea
-        if event.type == pygame.QUIT:
-            running = False
+        match event.type:
+            case pygame.QUIT:
+                running = False
+            case pygame.KEYDOWN:
+                match event.key:
+                    # Player 1
+                    case pygame.K_DOWN:
+                        player_1.y_change = 0.3 
+                    case pygame.K_UP:
+                        player_1.y_change = -0.3
 
-        if event.type == pygame.KEYDOWN:
-            # Player 1
-            if event.key == pygame.K_DOWN: 
-                player_1.y_change = 0.3 
-            elif event.key == pygame.K_UP: 
-                player_1.y_change = -0.3
-            
-            # Player 2
-            elif event.key == pygame.K_w: 
-                player_2.y_change = -0.3 
-            elif event.key == pygame.K_s: 
-                player_2.y_change = 0.3
+                    # Player 2
+                    case pygame.K_w: 
+                        player_2.y_change = -0.3
+                    case pygame.K_s: 
+                        player_2.y_change = 0.3
 
-            # Si aprieta el espacio inicia el partido
-            elif event.key == pygame.K_SPACE: 
-                if ball.state == "waiting": 
-                    ball.state = "start"
+                    # Si aprieta el espacio inicia el partido
+                    case pygame.K_SPACE: 
+                        if ball.state == "waiting": 
+                            ball.state = "start"
+                    
+                    # Si aprieta la "r" vuelve al inicio
+                    case pygame.K_r:
+                        ball.reset()
+                        player_1_score = 0
+                        player_2_score = 0
+                        status = "playing"
 
-            # Si aprieta la "r" vuelve al inicio
-            elif event.key == pygame.K_r:
-                ball.reset()
-                player_1_score = 0
-                player_2_score = 0
-                status = "playing"
-
-        # Detectar si se suelta la tecla
-        elif event.type == pygame.KEYUP:
-            if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
-                player_1.y_change = 0
-            elif event.key == pygame.K_w or event.key == pygame.K_s:
-                player_2.y_change = 0
+            # Detectar si se suelta la tecla
+            case pygame.KEYUP:
+                match event.key:
+                    #Player 1
+                    case pygame.K_UP:
+                        player_1.y_change = 0
+                    case pygame.K_DOWN:
+                        player_1.y_change = 0
+                    #Player 2
+                    case pygame.K_w:
+                        player_2.y_change = 0
+                    case pygame.K_s:
+                        player_2.y_change = 0
 
     if status == "playing":
         pygame.draw.line(screen, WHITE, (400, 0), (400, 600), 2)  # Línea vertical en   el centro de la pantalla
