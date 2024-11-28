@@ -23,6 +23,10 @@ player_1_score = 0
 player_2_score = 0
 font_score = pygame.font.Font(None, 64)
 
+#Incializo el cartel de Match Point
+match_point_txt = "¡MATCH POINT!"
+font_match_point = pygame.font.Font(None, 32)
+
 status = "playing"
 
 #Inicializo los jugadores
@@ -113,6 +117,10 @@ while running:
         score_text_p2 = font_score.render(f"{player_2_score}", True, (255, 255, 255))
         screen.blit(score_text_p1, (325, 20))  
         screen.blit(score_text_p2, (450, 20))
+
+        if player_1_score == 9 or player_2_score == 9:
+            text_match_point = font_match_point.render(f"{match_point_txt}", True, (255, 0, 0))
+            screen.blit(text_match_point, (314 , 65))
 
         # Cuando uno de los jugadores logra 10 puntos se termina el juego
         if player_1_score == 10 or player_2_score == 10:
