@@ -121,7 +121,7 @@ while running:
         screen.blit(score_text_p1, (325, 20))  
         screen.blit(score_text_p2, (450, 20))
 
-        # Verifico si estan en match point e invierto la flag para evitar un
+        # Verifico si estan en match point e invierto la flag para evitar un loop infinito
         if match_point(player_1_score, player_2_score):
             if not flag_match_point:
                 flag_match_point = True
