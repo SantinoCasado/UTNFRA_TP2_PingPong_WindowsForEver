@@ -1,7 +1,7 @@
 import pygame
 import pygame.mixer as mixer
 from Clases import *
-from Functions_game.point_players import point_player_1, point_player_2
+from Functions_game.point_players import point_player_1, point_player_2, match_point
 from Functions_game.winner import winner
 
 
@@ -23,10 +23,6 @@ player_1_score = 0
 player_2_score = 0
 font_score = pygame.font.Font(None, 64)
 
-#Incializo el cartel de Match Point
-match_point_txt = "¡MATCH POINT!"
-font_match_point = pygame.font.Font(None, 32)
-
 status = "playing"
 
 #Inicializo los jugadores
@@ -35,6 +31,13 @@ player_2 = Player(0, 300)
 
 #Inicializo la pelota
 ball = Ball()
+
+# Inicializo el audio y bandera del match point
+flag_match_point = False    # Para evitar un loop infinito de audio
+match_point_sound = pygame.mixer.Sound("Sounds/match_point.mp3")
+match_point_sound.set_volume(1)
+
+
 # Bandera
 running = True
 
@@ -118,10 +121,11 @@ while running:
         screen.blit(score_text_p1, (325, 20))  
         screen.blit(score_text_p2, (450, 20))
 
-        # En el caso de que uno de los jugadores consiga 9 puntos se mostrara el texto: "¡MATCH POINT!"
-        if player_1_score == 9 or player_2_score == 9:
-            text_match_point = font_match_point.render(f"{match_point_txt}", True, (255, 0, 0))
-            screen.blit(text_match_point, (314 , 65))
+        # Verifico si estan en match point e invierto la flag para evitar un
+        if match_point(player_1_score, player_2_score):
+            if not flag_match_point:
+                flag_match_point = True
+                pygame.mixer.Sound.play(match_point_sound)
 
         # Cuando uno de los jugadores logra 10 puntos se termina el juego
         if player_1_score == 10 or player_2_score == 10:
