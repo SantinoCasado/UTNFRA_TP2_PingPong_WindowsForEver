@@ -10,7 +10,7 @@ match_point_txt = "¡MATCH POINT!"
 font_match_point = pygame.font.Font(None, 32)
 
 # Sonido cuando consigue un punto
-point_sound = pygame.mixer.Sound("Sounds/punto.mp3")
+point_sound = pygame.mixer.Sound("Package_Sounds/punto.mp3")
 point_sound.set_volume(1)   # Seteo el volumen del audio (Estaba re fuerte al principio xD)
 
 def point_player_1(ball_x):

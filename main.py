@@ -34,7 +34,7 @@ ball = Ball()
 
 # Inicializo el audio y bandera del match point
 flag_match_point = False    # Para evitar un loop infinito de audio
-match_point_sound = pygame.mixer.Sound("Sounds/match_point.mp3")
+match_point_sound = pygame.mixer.Sound("Package_Sounds/match_point.mp3")
 match_point_sound.set_volume(1)
 
 

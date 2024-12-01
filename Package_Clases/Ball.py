@@ -13,10 +13,10 @@ mixer.init()
 screen = pygame.display.set_mode((800, 600))    # Tupla que define el tamaño de la ventana, con 800 píxeles de ancho y 600 píxeles de alto.    
 
 # Sonido colisión entre la pelota y la paleta
-collision_paleta_sound = pygame.mixer.Sound("Sounds/contra_paleta.mp3")
+collision_paleta_sound = pygame.mixer.Sound("Package_Sounds/contra_paleta.mp3")
 
 # Sonido cuando choca contra los bordes
-collition_limites_sound = pygame.mixer.Sound("Sounds/contra_pared.mp3")
+collition_limites_sound = pygame.mixer.Sound("Package_Sounds/contra_pared.mp3")
 collition_limites_sound.set_volume(60)
 
 class Ball: 
