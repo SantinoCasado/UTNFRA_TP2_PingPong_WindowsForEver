@@ -3,6 +3,7 @@ import pygame.mixer as mixer
 from Clases import *
 from Functions_game.point_players import point_player_1, point_player_2, match_point
 from Functions_game.winner import winner
+from Functions_game.players_scores import players_score
 
 
 # Inicializamos el pygame
@@ -21,13 +22,12 @@ BLACK = (0, 0, 0)
 #Inicializo los puntajes
 player_1_score = 0
 player_2_score = 0
-font_score = pygame.font.Font(None, 64)
 
 status = "playing"
 
 #Inicializo los jugadores
-player_1 = Player(780, 300)
-player_2 = Player(0, 300)
+player_1 = Player(760, 300)
+player_2 = Player(20, 300)
 
 #Inicializo la pelota
 ball = Ball()
@@ -116,10 +116,7 @@ while running:
         ball.draw()
 
         #Muestro por pantalla los puntajes
-        score_text_p1 = font_score.render(f"{player_1_score}", True, (255, 255, 255))
-        score_text_p2 = font_score.render(f"{player_2_score}", True, (255, 255, 255))
-        screen.blit(score_text_p1, (325, 20))  
-        screen.blit(score_text_p2, (450, 20))
+        players_score(player_1_score, player_2_score)
 
         # Verifico si estan en match point e invierto la flag para evitar un loop infinito
         if match_point(player_1_score, player_2_score):

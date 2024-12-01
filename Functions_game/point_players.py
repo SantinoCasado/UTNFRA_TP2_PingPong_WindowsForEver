@@ -25,7 +25,7 @@ def point_player_2(ball_x):
 
 # En el caso de que uno de los jugadores consiga 9 puntos se mostrara el texto: "¡MATCH POINT! y se generara un audio"
 def match_point(player_1_score, player_2_score):
-    if (player_1_score == 9 or player_2_score == 9):
-        text_match_point = font_match_point.render(f"{match_point_txt}", True, (255, 0, 0))
-        screen.blit(text_match_point, (314, 65))
+    if (player_1_score == 9 or player_2_score == 9):    # Si cualquiera de los dos jugadores llega a 9 puntos
+        text_match_point = font_match_point.render(f"{match_point_txt}", True, (255, 0, 0)) # A partir del font asigno el texto y su color
+        screen.blit(text_match_point, (314, 85))    # Ajusto donde parece el cartel en x e y
         return True
