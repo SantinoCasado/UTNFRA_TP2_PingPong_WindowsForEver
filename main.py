@@ -1,9 +1,9 @@
 import pygame
 import pygame.mixer as mixer
-from Clases import *
-from Functions_game.point_players import point_player_1, point_player_2, match_point
-from Functions_game.winner import winner
-from Functions_game.players_scores import players_score
+from Package_Clases import *
+from Package_Functions_Game.point_players import point_player_1, point_player_2, match_point
+from Package_Functions_Game.winner import winner
+from Package_Functions_Game.players_scores import players_score
 
 
 # Inicializamos el pygame
