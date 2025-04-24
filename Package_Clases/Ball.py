@@ -45,7 +45,8 @@ class Ball:
 
         # Si rebota en los bordes superiores e inferiores
         if self.rect.y <= 0 or self.rect.y >= 580:  
-            self.y_change = -self.y_change  
+            self.y_change = -self.y_change
+            collition_limites_sound.play()
 
     # Si colisiona con una de las paletas cambia la dirección
     def check_collision(self, paddles):  
@@ -53,7 +54,8 @@ class Ball:
             if self.rect.colliderect(paddle.rect):  
                 self.x_change *= 1.1  
                 self.y_change *= 1.1  
-                self.x_change = -self.x_change 
+                self.x_change = -self.x_change
+                collision_paleta_sound.play()
                 
     # Establecemos la función de reset
     def reset(self):  
